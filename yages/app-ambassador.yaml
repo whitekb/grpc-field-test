@@ -1,0 +1,47 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: yages
+  name: yages
+  namespace: grpc-demo-ambassador
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: yages
+    spec:
+      containers:
+      - name: grpcsrv
+        image: quay.io/mhausenblas/yages:0.1.0
+        ports:
+        - containerPort: 9000
+          protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: yages
+  name: yages
+  namespace: grpc-demo-ambassador
+  annotations:
+    getambassador.io/config: |
+      ---
+      apiVersion: ambassador/v0
+      kind: Mapping
+      name: grpc_mapping
+      grpc: true
+      prefix: /echo/
+      rewrite: /yages.Echo/
+      service: yages.grpc-demo:9000
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 9000
+    protocol: TCP
+    targetPort: 9000
+  selector:
+    app: yages
