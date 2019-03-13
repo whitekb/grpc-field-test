@@ -1,12 +1,14 @@
 # GRPC field test on Google cloud
 
-
-
 ## Intention
 
-This project is meant to get a first look at the GRPC support on Google Cloud.
-Especially the capabilities of the GRPC support of Google Cloud endpoints and the Extensible Service Proxy (ESP) are of interest.
-Ideally after going through this project you developed an understanding what Google Cloud can provide you out-of-the-box for GRPC API's and their management and operation.
+This project is meant to be a simple benchmark of Google Cloud Enpoints and their GRPC support.
+Ideally at the end we have an API which could be published to the world (incl. the business side like payment plans).
+Topics that should be covered:
+- deplyoment of the API
+- basic security (TLS, use of API keys)
+- multi-tenancy (with self sign-on)
+- public API documentation
 
 ## References
 
@@ -15,7 +17,7 @@ https://github.com/mhausenblas/yages
 
 A snapshot of the project is contained in the ``` /yages ``` folder.
 There are some changes to YAGES compared to it's original repository.
-Please refer to [CHANGELOG.md] (./yages/CHANGELOG.md) for details.
+Please refer to [CHANGELOG.md](./yages/CHANGELOG.md) for details.
 
 ## Preparations
 
@@ -35,9 +37,11 @@ After following these steps you will have:
  - a running deployment of the Yages GRPC server
  - a running ESP container
  - a configured Cloud Endpoints API
- - TLS activated for your API
- - your API requires API keys
- - a request quota configured for your API
+
+ Advanced lessons are available for:
+ - [TLS activated for your API](./advances_lessons/TLS.md)
+ - enable [API keys](./advances_lessons/API_AUTH.md)
+ - configure [quotas](./advances_lessons/REQUEST_QUOTAS.md)
 
 ### Let's start
 
@@ -126,6 +130,11 @@ sudo docker run \
 
 
 6. Deploy your Google Cloud endpoints API
+
+
+
+7. Start the ESP on your VM
+
 ```
 sudo docker run \
     --detach \
@@ -139,8 +148,6 @@ sudo docker run \
     --backend=grpc://YOUR_API_CONTAINER_NAME:9000
 ```
 
-
-7. Start the ESP on your VM
 
 Congratulations! You have a running GRPC service with Google Cloud endpoints.
 Do a quick test with GRPCURL.
