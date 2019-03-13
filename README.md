@@ -167,9 +167,10 @@ grpcurl --plaintext [your-service-url]:50000 yages.Echo.Ping
 
 
 ## Verdict on Google Cloud & GRPC
+[Verdict](./VERDICT.md)
 
 ## Further Reading
-https://cloud.google.com/endpoints/docs/grpc/get-started-compute-engine-docker
-https://cloud.google.com/endpoints/docs/grpc/specify-proxy-startup-options
-https://cloud.google.com/endpoints/docs/grpc/enabling-ssl
+- https://cloud.google.com/endpoints/docs/grpc/get-started-compute-engine-docker
+- https://cloud.google.com/endpoints/docs/grpc/specify-proxy-startup-options
+- https://cloud.google.com/endpoints/docs/grpc/enabling-ssl
 
