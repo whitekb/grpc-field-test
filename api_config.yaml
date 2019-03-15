@@ -25,14 +25,14 @@ config_version: 3
 #
 # Name of the service configuration.
 #
-name: yages.endpoints.endless-force-233013.cloud.goog
+name: echo.endpoints.grpc-field-test.cloud.goog
 
 #
 # Endpoints availaable in the service
 #
 endpoints:
-- name: yages.[YOUR_PROJECT_ID].cloud.goog 
-  target: "[external IP of your VM]"
+- name: echo.endpoints.grpc-field-test.cloud.goog 
+  target: "35.229.70.115"
 
 #
 # API title to appear in the user interface (Google Cloud Console).
@@ -48,11 +48,11 @@ apis:
 usage:
   rules:
   ### allow public access to all API's
-  - selector: *
+  - selector: "*"
     allow_unregistered_calls: true
 
   ### only reflection can be called without an API Key
-  #  - selector: yages.Echo.Ping
-  #  allow_unregistered_calls: true
+  #- selector: yages.Echo.Ping
+  #  allow_unregistered_calls: false
   #- selector: grpc.reflection.v1alpha.ServerReflection.ServerReflectionInfo
   #  allow_unregistered_calls: true

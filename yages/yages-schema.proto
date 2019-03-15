@@ -15,14 +15,16 @@ message Content {
 // The echo YAGES service replies with the message it received.
 service Echo {
   rpc Ping(Empty) returns (Content) {
-    option (google.api.http) = { get: "/v1/ping" };
+    //Annotation used in advanced lessons
+    //option (google.api.http) = { get: "/v1/ping" };
   }
   
   rpc Reverse(Content) returns (Content) {
-    option (google.api.http) = {
-      post: "/v1/reverse"
-      body: "content"
-};
+    //Annotation used in advanced lessons
+    //option (google.api.http) = {
+    //  post: "/v1/reverse"
+    //  body: "content"
+    //};
   }
 }
 

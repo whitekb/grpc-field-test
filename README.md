@@ -52,8 +52,10 @@ After following these steps you will have:
   --machine-type=f1-micro \
   --subnet=default \
   --network-tier=PREMIUM \
+  --service-account=default \
+  --scopes=default \
   --maintenance-policy=MIGRATE \
-  --tags=http-server,https-server grpc-server\
+  --tags=http-server,https-server,grpc-server\
   --image=ubuntu-1804-bionic-v20190307 \
   --image-project=ubuntu-os-cloud \
   --boot-disk-size=10GB \
@@ -88,7 +90,7 @@ gcloud compute --project=grpc-field-test firewall-rules create default-allow-grp
 --action=ALLOW \
 --rules=tcp:50000 \
 --source-ranges=0.0.0.0/0 \
---target-tags=https-server
+--target-tags=grpc-server
 ```
 
 3. Get your VM ready
@@ -131,7 +133,23 @@ sudo docker run \
 
 6. Deploy your Google Cloud endpoints API
 
+Open the file ``` api_config.yaml ``` and replace all occurences of ``` [[YOUR_PROJECT_ID]] ``` with your actual project ID.
 
+Afterwards compile the API description:
+```
+protoc \
+  --proto_path=. \
+  --include_imports \
+  --include_source_info \
+  --descriptor_set_out=api_descriptor.pb \
+  yages/reflection.proto yages/yages-schema.proto
+```
+You will get a API Descriptor File called ``` api_descriptor.pb ```
+
+Now we deploy the endpoint in Google Cloud:
+```
+gcloud endpoints services deploy api_descriptor.pb api_config.yaml
+```
 
 7. Start the ESP on your VM
 
@@ -139,7 +157,7 @@ sudo docker run \
 sudo docker run \
     --detach \
     --name=esp \
-    --publish=50000:9000 \
+    --publish=50000:50000 \
     --net=esp_net \
     gcr.io/endpoints-release/endpoints-runtime:1 \
     --service=SERVICE_NAME \
