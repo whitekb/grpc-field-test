@@ -1,8 +1,11 @@
 # Limiting API usage
 
 ## Prerequisites
+
 - [API keys enabled for your service](API_KEYS.md)
+
 ## Enabling quotas
+
 So we looked at the usage of [API keys](API_KEYS.md) to restrict access to your API and [TLS](TLS.md) to secure the communication channel, but how do you ensure that your API is not overused to avoid performance and stability issues?
 
 *__Quotas to the rescue!__*
@@ -78,5 +81,6 @@ grpcurl \
 [your-service-url]:50000 yages.Echo.Ping
 ```
 
-## Further Reading:
--  https://cloud.google.com/endpoints/docs/grpc/quotas-configure
+## Further Reading
+
+- https://cloud.google.com/endpoints/docs/grpc/quotas-configure

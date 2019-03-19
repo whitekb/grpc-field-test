@@ -60,6 +60,6 @@ grpcurl \
 [your-service-url]:50000 yages.Echo.Ping
 ```
 
+## Further Reading
 
-## Further Reading:
 - https://cloud.google.com/endpoints/docs/grpc/restricting-api-access-with-api-keys?hl=en
