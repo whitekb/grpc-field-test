@@ -47,7 +47,7 @@ After following these steps you will have:
 
   1. Create your Google Cloud Compute Engine instance
   ``` 
-  gcloud compute --project=grpc-field-test instances create grpc-test-vm \
+  gcloud compute --project=[YOUR-PROJECT-ID] instances create grpc-test-vm \
   --zone=us-east1-b \
   --machine-type=f1-micro \
   --subnet=default \
@@ -65,7 +65,7 @@ After following these steps you will have:
 2. Configure your firewall rules
 
 ```
-gcloud compute --project=grpc-field-test firewall-rules create default-allow-http \
+gcloud compute firewall-rules create default-allow-http \
 --direction=INGRESS \
 --priority=1000 \
 --network=default \
@@ -74,7 +74,7 @@ gcloud compute --project=grpc-field-test firewall-rules create default-allow-htt
 --source-ranges=0.0.0.0/0 \
 --target-tags=http-server
 
-gcloud compute --project=grpc-field-test firewall-rules create default-allow-https \
+gcloud compute firewall-rules create default-allow-https \
 --direction=INGRESS \
 --priority=1000 \
 --network=default \
@@ -83,7 +83,7 @@ gcloud compute --project=grpc-field-test firewall-rules create default-allow-htt
 --source-ranges=0.0.0.0/0 \
 --target-tags=https-server
 
-gcloud compute --project=grpc-field-test firewall-rules create default-allow-grpc \
+gcloud compute firewall-rules create default-allow-grpc \
 --direction=INGRESS \
 --priority=1000 \
 --network=default \
@@ -138,11 +138,10 @@ Open the file ``` api_config.yaml ``` and replace all occurences of ``` [[YOUR_P
 Afterwards compile the API description:
 ```
 protoc \
-  --proto_path=. \
   --include_imports \
   --include_source_info \
   --descriptor_set_out=api_descriptor.pb \
-  yages/reflection.proto yages/yages-schema.proto
+  ./yages/reflection.proto ./yages/yages-schema.proto
 ```
 You will get a API Descriptor File called ``` api_descriptor.pb ```
 
@@ -160,10 +159,22 @@ sudo docker run \
     --publish=50000:50000 \
     --net=esp_net \
     gcr.io/endpoints-release/endpoints-runtime:1 \
-    --service=SERVICE_NAME \
+    --service=[YOUR ENDPOINTS SERVICE NAME] \
     --rollout_strategy=managed \
     --http2_port=50000 \
-    --backend=grpc://YOUR_API_CONTAINER_NAME:9000
+    --backend=grpc://[YOUR GRPC SERVICE CONTAINER]:9000
+
+### Example:
+sudo docker run \
+    --detach \
+    --name=esp \
+    --publish=50000:50000 \
+    --net=esp_net \
+    gcr.io/endpoints-release/endpoints-runtime:1 \
+    --service=echo.endpoints.grpc-endpoints-test-234608.cloud.goog \
+    --rollout_strategy=managed \
+    --http2_port=50000 \
+    --backend=grpc://yages:9000
 ```
 
 
@@ -178,14 +189,14 @@ docker run --name grpcclient --rm -it quay.io/mhausenblas/gump:0.1 sh
 grpcurl --plaintext [your-service-url]:50000 yages.Echo.Ping
 ```
 
+Now that we have a running service we can start working on:
+- [using authentication](./advanced_lessons/API_KEYS.md)
+- [limiting the service through quotas](./advanced_lessons/REQUEST_QUOTAS.md)
+- [securing the service](./advanced_lessons/TLS.md)
 
 
-
-
-
-
-## Verdict on Google Cloud & GRPC
-[Verdict](./VERDICT.md)
+## My personal wrap up on Google Cloud & GRPC
+[personal banter](./WRAPUP.md)
 
 ## Further Reading
 - https://cloud.google.com/endpoints/docs/grpc/get-started-compute-engine-docker

@@ -50,9 +50,3 @@ usage:
   ### allow public access to all API's
   - selector: "*"
     allow_unregistered_calls: true
-
-  ### only reflection can be called without an API Key
-  #- selector: yages.Echo.Ping
-  #  allow_unregistered_calls: false
-  #- selector: grpc.reflection.v1alpha.ServerReflection.ServerReflectionInfo
-  #  allow_unregistered_calls: true
