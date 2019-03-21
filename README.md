@@ -158,7 +158,7 @@ sudo docker run \
     --name=esp \
     --publish=50000:50000 \
     --net=esp_net \
-    gcr.io/endpoints-release/endpoints-runtime:1 \
+    gcr.io/endpoints-release/endpoints-runtime:1.30.0 \
     --service=[YOUR ENDPOINTS SERVICE NAME] \
     --rollout_strategy=managed \
     --http2_port=50000 \
@@ -170,7 +170,7 @@ sudo docker run \
     --name=esp \
     --publish=50000:50000 \
     --net=esp_net \
-    gcr.io/endpoints-release/endpoints-runtime:1 \
+    gcr.io/endpoints-release/endpoints-runtime:1.30.0 \
     --service=echo.endpoints.grpc-endpoints-test-234608.cloud.goog \
     --rollout_strategy=managed \
     --http2_port=50000 \

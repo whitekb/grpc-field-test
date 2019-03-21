@@ -59,8 +59,8 @@ sudo docker run --name=esp \
      --net=esp_net \
      --volume=[PATH TO CERT FILE]:/etc/nginx/ssl/nginx.cert \
      --volume=[PATH TO KEY FILE]:/etc/nginx/ssl/nginx.key \
-     --link=echo:echo \
-     gcr.io/endpoints-release/endpoints-runtime:1 \
+     --link=[GRPC SERVICE CONTAINER NAME]:[GRPC SERVICE CONTAINER NAME] \
+     gcr.io/endpoints-release/endpoints-runtime:1.30.0 \
      --service=[SERVICE_NAME] \
      --rollout_strategy=managed \
      --backend=[GRPC SERVICE CONTAINER NAME]:8080 \
@@ -73,8 +73,8 @@ sudo docker run --name=esp \
      --net=esp_net \
      --volume=/etc/letsencrypt/live/echo.endpoints.grpc-endpoints-test-234608.cloud.goog/privkey.pem:/etc/nginx/ssl/nginx.key \
      --volume=/etc/letsencrypt/live/echo.endpoints.grpc-endpoints-test-234608.cloud.goog/cert.pem:/etc/nginx/ssl/nginx.crt \
-     --link=echo:echo \
-     gcr.io/endpoints-release/endpoints-runtime:1 \
+     --link=yages:yages \
+     gcr.io/endpoints-release/endpoints-runtime:1.30.0 \
      --service=echo.endpoints.grpc-endpoints-test-234608.cloud.goog \
      --rollout_strategy=managed \
      --backend=yages:9000 \
